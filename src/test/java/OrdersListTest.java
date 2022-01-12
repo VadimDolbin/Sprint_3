@@ -17,7 +17,7 @@ public class OrdersListTest {
 
     @Test
     @DisplayName("Check that a not empty list of orders is returned")
-    @Description("api/v1/courier endpoint returns 200 status code and not empty body")
+    @Description(OrderClient.ORDERS_ENDPOINT + " endpoint returns 200 status code and not empty arrays of orders, pageInfo and availableStations")
     public void testNotEmptyOrdersListIsReturned() {
         ValidatableResponse response = orderClient.get();
 
@@ -25,6 +25,10 @@ public class OrdersListTest {
                 .assertThat()
                 .statusCode(SC_OK)
                 .and()
-                .body(notNullValue());
+                .body("orders", notNullValue())
+                .and()
+                .body("pageInfo", notNullValue())
+                .and()
+                .body("availableStations", notNullValue());
     }
 }

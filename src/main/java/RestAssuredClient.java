@@ -6,7 +6,7 @@ public class RestAssuredClient {
     public RequestSpecification getBaseSpec() {
         return new RequestSpecBuilder()
                 .setContentType(ContentType.JSON)
-                .setBaseUri("https://qa-scooter.praktikum-services.ru")
+                .setBaseUri("https://qa-scooter.praktikum-services.ru/api/v1/")
                 .build();
     }
 }

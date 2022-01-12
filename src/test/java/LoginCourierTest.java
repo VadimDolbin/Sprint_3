@@ -1,3 +1,4 @@
+import com.github.javafaker.Faker;
 import io.qameta.allure.Description;
 import io.qameta.allure.junit4.DisplayName;
 import io.restassured.response.ValidatableResponse;
@@ -25,7 +26,7 @@ public class LoginCourierTest {
 
     @Test
     @DisplayName("Check that a new courier can be logged in using all required fields")
-    @Description("/api/v1/courier/login endpoint returns 200 status code and body 'id': 'not null'")
+    @Description(CourierClient.COURIER_LOGIN_ENDPOINT + " endpoint returns 200 status code and body 'id': 'not null'")
     public void testCourierIsLoggedInUsingRequiredFields() {
         Courier courier = Courier.getRandom();
         courierClient.create(courier);
@@ -42,7 +43,7 @@ public class LoginCourierTest {
 
     @Test
     @DisplayName("Check that a new courier can not be logged in without a login")
-    @Description("/api/v1/courier/login endpoint returns 400 status code and body 'message': 'Недостаточно данных для входа'")
+    @Description(CourierClient.COURIER_LOGIN_ENDPOINT + " endpoint returns 400 status code and body 'message': 'Недостаточно данных для входа'")
     public void testCourierIsNotLoggedInWithoutLogin() {
         Courier courier = Courier.getRandomWithoutLogin();
         courierClient.create(courier);
@@ -57,7 +58,7 @@ public class LoginCourierTest {
 
     @Test
     @DisplayName("Check that a new courier can not be logged in without a password")
-    @Description("/api/v1/courier/login endpoint returns 400 status code and body 'message': 'Недостаточно данных для входа'")
+    @Description(CourierClient.COURIER_LOGIN_ENDPOINT + " endpoint returns 400 status code and body 'message': 'Недостаточно данных для входа'")
     public void testCourierIsNotLoggedInWithoutPassword() {
         Courier courier = Courier.getRandomWithoutPassword();
         courierClient.create(courier);
@@ -72,9 +73,10 @@ public class LoginCourierTest {
 
     @Test
     @DisplayName("Check that non-existing courier can not be logged in using all required fields")
-    @Description("/api/v1/courier/login endpoint returns 404 status code and body 'message': 'Учетная запись не найдена'")
+    @Description(CourierClient.COURIER_LOGIN_ENDPOINT + " endpoint returns 404 status code and body 'message': 'Учетная запись не найдена'")
     public void testNonExistingCourierIsNotLoggedInUsingRequiredFields() {
-        ValidatableResponse response = courierClient.login(new CourierCredentials("NonExistingUser", "NonExistingPassword"));
+        Faker faker = new Faker();
+        ValidatableResponse response = courierClient.login(new CourierCredentials(faker.name().firstName(), faker.name().lastName()));
 
         response
                 .assertThat()

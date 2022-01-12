@@ -46,7 +46,7 @@ public class CreateOrderParameterizedTest {
 
     @Test
     @DisplayName("Check that a new order can be created using all possible values of color field")
-    @Description("/api/v1/orders endpoint returns 201 status code and body 'track': 'not null'")
+    @Description(OrderClient.ORDERS_ENDPOINT + " endpoint returns 201 status code and body 'track': 'not null'")
     public void testOrderIsCreatedUsingColorValues() {
         Order order = new Order(color);
 

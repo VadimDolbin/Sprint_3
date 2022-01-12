@@ -1,3 +1,5 @@
+import com.github.javafaker.Faker;
+
 import java.util.List;
 
 public class Order {
@@ -12,14 +14,16 @@ public class Order {
     public final List<String> color;
 
     public Order(List<String> color) {
-        this.firstName = "Naruto";
-        this.lastName = "Uchiha";
-        this.address = "Konoha, 142 apt.";
-        this.metroStation = "4";
-        this.phone = "+7 800 355 35 35";
-        this.rentTime = 5;
-        this.deliveryDate = "2020-06-06";
-        this.comment = "Saske, come back to Konoha";
+        Faker faker = new Faker();
+
+        this.firstName = faker.name().firstName();
+        this.lastName = faker.name().lastName();;
+        this.address = faker.address().fullAddress();
+        this.metroStation = faker.number().digits(2);
+        this.phone = faker.phoneNumber().cellPhone();
+        this.rentTime = faker.random().nextInt(24);
+        this.deliveryDate = faker.backToTheFuture().date();
+        this.comment = faker.nation().language();
         this.color = color;
     }
 }
